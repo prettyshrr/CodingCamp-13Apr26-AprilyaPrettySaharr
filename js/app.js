@@ -78,7 +78,7 @@ function validateForm() {
   let valid = true;
 
   const name     = nameEl.value.trim();
-  const amount   = parseFloat(amountEl.value);
+  const amount   = parseAmount(amountEl.value);
   const category = categoryEl.value;
 
   if (!name) {
@@ -87,7 +87,7 @@ function validateForm() {
     valid = false;
   }
 
-  if (!amountEl.value || isNaN(amount) || amount <= 0) {
+  if (!amountEl.value.trim() || isNaN(amount) || amount <= 0) {
     errors.amount = 'Please enter a positive amount.';
     errAmount.textContent = errors.amount;
     valid = false;
@@ -129,7 +129,7 @@ function onFormSubmit(e) {
   if (!valid) return;
 
   const name     = document.getElementById('item-name').value.trim();
-  const amount   = parseFloat(document.getElementById('item-amount').value);
+  const amount   = parseAmount(document.getElementById('item-amount').value);
   const category = document.getElementById('item-category').value;
 
   addTransaction(name, amount, category);
@@ -156,15 +156,35 @@ function onSortChange(e) {
 }
 
 function onLimitChange(e) {
-  const val = parseFloat(e.target.value);
+  const val = parseAmount(e.target.value);
   state.spendingLimit = (!isNaN(val) && val >= 0) ? val : null;
   saveState();
   applyHighlights();
 }
 
 // ---------------------------------------------------------------------------
-// Rendering — Balance
+// Amount parsing — handles locale-agnostic input
+// Accepts: "15000", "15.000", "15,000", "15.000,50", "15000.50"
 // ---------------------------------------------------------------------------
+
+function parseAmount(raw) {
+  if (!raw || !raw.trim()) return NaN;
+  let s = raw.trim();
+  // Remove thousand separators: dots followed by 3 digits, or commas followed by 3 digits
+  // Detect decimal separator: if last separator is comma → European format
+  const lastComma = s.lastIndexOf(',');
+  const lastDot   = s.lastIndexOf('.');
+  if (lastComma > lastDot) {
+    // European/Indonesian format: 1.000.000,50
+    s = s.replace(/\./g, '').replace(',', '.');
+  } else {
+    // Standard format: 1,000,000.50 or plain 15000
+    s = s.replace(/,/g, '');
+  }
+  return parseFloat(s);
+}
+
+
 
 function renderBalance() {
   const total = state.transactions.reduce((sum, t) => sum + t.amount, 0);
@@ -366,7 +386,7 @@ function init() {
   // Restore persisted UI control values
   const limitInput = document.getElementById('spending-limit');
   if (state.spendingLimit !== null) {
-    limitInput.value = state.spendingLimit;
+    limitInput.value = Math.round(state.spendingLimit).toLocaleString('id-ID');
   }
   document.getElementById('sort-select').value = state.sortOrder;
 
