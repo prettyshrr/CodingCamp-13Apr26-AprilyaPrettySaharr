@@ -1,0 +1,507 @@
+/* ============================================================
+   Theme Variables — Light (pink/purple girly palette)
+   ============================================================ */
+
+:root {
+  --bg-from: #fce4ec;
+  --bg-to:   #f3e5f5;
+  --glass-bg:     rgba(255, 255, 255, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-shadow: rgba(236, 64, 122, 0.12);
+  --text:         #4a1942;
+  --text-muted:   #9c6b98;
+  --accent:       #e91e8c;
+  --accent-2:     #ab47bc;
+  --btn-text:     #ffffff;
+  --input-bg:     rgba(255, 255, 255, 0.6);
+  --input-border: rgba(233, 30, 140, 0.3);
+  --highlight:    rgba(255, 82, 82, 0.18);
+  --error-color:  #c62828;
+  --balance-color: #e91e8c;
+}
+
+/* Dark mode overrides */
+html.dark {
+  --bg-from: #1a0a2e;
+  --bg-to:   #2d1b4e;
+  --glass-bg:     rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: rgba(171, 71, 188, 0.2);
+  --text:         #f8e8ff;
+  --text-muted:   #ce93d8;
+  --accent:       #f06292;
+  --accent-2:     #ce93d8;
+  --btn-text:     #ffffff;
+  --input-bg:     rgba(255, 255, 255, 0.08);
+  --input-border: rgba(240, 98, 146, 0.4);
+  --highlight:    rgba(255, 82, 82, 0.25);
+  --error-color:  #ff8a80;
+  --balance-color: #f48fb1;
+}
+
+/* ============================================================
+   Base Reset
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Decorative blobs in background */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #f48fb1, #ce93d8);
+  top: -100px;
+  right: -100px;
+}
+
+body::after {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #b39ddb, #80cbc4);
+  bottom: -80px;
+  left: -80px;
+}
+
+/* ============================================================
+   Glass Card
+   ============================================================ */
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px var(--glass-shadow), 0 1px 0 var(--glass-border) inset;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 20px var(--glass-shadow);
+}
+
+.header-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-emoji {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+header h1 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================
+   Main Layout
+   ============================================================ */
+
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Two-column row for limit + sort */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 480px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Section Labels
+   ============================================================ */
+
+.section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* ============================================================
+   Balance Section
+   ============================================================ */
+
+#balance-section {
+  text-align: center;
+  padding: 28px 20px;
+}
+
+#balance-display {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin: 4px 0 8px;
+}
+
+.balance-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   Form
+   ============================================================ */
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+
+#transaction-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   Inputs & Selects
+   ============================================================ */
+
+input[type="text"],
+input[type="number"],
+select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(8px);
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.15);
+}
+
+select option {
+  background: #fff;
+  color: #333;
+}
+
+html.dark select option {
+  background: #2d1b4e;
+  color: #f8e8ff;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 700;
+  color: var(--btn-text);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(233, 30, 140, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+  opacity: 0.85;
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 4px 15px rgba(233, 30, 140, 0.25);
+  margin-top: 4px;
+}
+
+/* Theme toggle button */
+#theme-toggle {
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1.5px solid var(--input-border);
+  font-size: 0.82rem;
+  padding: 8px 14px;
+  min-height: 36px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: none;
+}
+
+#theme-toggle:hover {
+  background: var(--glass-border);
+  box-shadow: 0 4px 12px var(--glass-shadow);
+}
+
+/* ============================================================
+   Transaction List
+   ============================================================ */
+
+#transaction-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#transaction-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, transform 0.15s;
+}
+
+#transaction-list li:hover {
+  transform: translateX(2px);
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.transaction-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+.transaction-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.transaction-amount {
+  font-weight: 800;
+  font-size: 1rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+}
+
+.delete-btn {
+  min-height: 36px;
+  min-width: 36px;
+  padding: 6px;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: none;
+}
+
+.delete-btn:hover {
+  background: rgba(233, 30, 140, 0.12);
+  color: var(--accent);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Over-limit highlight */
+#transaction-list li.over-limit {
+  background: var(--highlight);
+  border-color: rgba(233, 30, 140, 0.3);
+}
+
+/* ============================================================
+   Chart Section
+   ============================================================ */
+
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  height: 300px;
+  margin: 8px auto 0;
+}
+
+#spending-chart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ============================================================
+   Empty / Error States
+   ============================================================ */
+
+.empty-msg {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 12px 0 4px;
+}
+
+.error {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--error-color);
+  min-height: 1em;
+  padding-left: 4px;
+}
+
+/* ============================================================
+   Utility
+   ============================================================ */
+
+.hidden {
+  display: none !important;
+}
+
+/* ============================================================
+   Responsive — 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .header-inner {
+    padding: 12px 14px;
+  }
+
+  header h1 {
+    font-size: 1.1rem;
+  }
+
+  main {
+    padding: 16px 12px 40px;
+    gap: 14px;
+  }
+
+  .glass-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+
+  #balance-display {
+    font-size: 2.2rem;
+  }
+
+  #transaction-list li {
+    flex-wrap: wrap;
+  }
+}
